@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+import io.opentelemetry.instrumentation.annotations.SpanAttribute;
+import io.opentelemetry.instrumentation.annotations.WithSpan;
+
 @SpringBootApplication
 @RestController
 @CrossOrigin(origins = "*")
@@ -78,7 +81,8 @@ public class TodobackendApplication {
 
 	}
 
-	String someInternalMethod(String todo){
+	@WithSpan
+	String someInternalMethod(@SpanAttribute String todo){
 
 		todoRepository.save(new Todo(todo));
 		if(todo.equals("slow")){
